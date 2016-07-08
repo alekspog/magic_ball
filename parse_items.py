@@ -4,6 +4,7 @@ import re
 driver = webdriver.PhantomJS()
 driver.implicitly_wait(10)
 pages_number = 10
+id_list = []
 for page in range(1, pages_number + 1):
 
     first_page_link = "https://market.yandex.ru/catalog/55070/list?hid=90796&how=dpop&in-stock=1"
@@ -14,15 +15,14 @@ for page in range(1, pages_number + 1):
     for item in item_header:
         item_name = item.find_element_by_css_selector('.snippet-card__header-text')
         item_href = item.find_element_by_css_selector('.snippet-card__header-link')
+        # получаем id товара из ссылки
         result = re.search("https://market.yandex.ru/product/(\d*)", item_href.get_attribute('href'))
-        if result:
-            print result.groups()[0] + ";" + item_name.text
+        item_id = result.groups()[0]
+        # создаем список id товаров
+        id_list.append(item_id)
 
-    # for item in item_hrefs:
-    #     # print(item.get_attribute('href'))
-    #     result = re.search("https://market.yandex.ru/product/(\d*)", item.get_attribute('href'))
-    #     if result:
-    #         print result.groups()[0]
+        if result:
+            print item_id + ";" + item_name.text
 
 driver.close()
 
