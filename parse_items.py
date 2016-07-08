@@ -1,8 +1,7 @@
 from selenium import webdriver
 import re
 
-# driver = webdriver.Firefox()
-driver = webdriver.PhantomJS(executable_path="C:\\Users\\alekspog\\PycharmProjects\\phantomjs-2.1.1-windows\\bin\\phantomjs.exe")
+driver = webdriver.PhantomJS()
 driver.implicitly_wait(10)
 pages_number = 10
 for page in range(1, pages_number + 1):
