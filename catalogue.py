@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 import re
 
-class Page(object):
-    def __init__(self, driver):
+class Catalogue(object):
+    def __init__(self, driver, first_page, page_numbers):
         self.driver = driver
+        self.first_page = first_page
+        self.page_numbers = page_numbers
 
-    def get_items_id(self, first_page, page_numbers=1):
+    def get_items_id(self):
         id_list = []
-        for page in range(1, page_numbers + 1):
+        for page in range(1, self.page_numbers + 1):
 
-            link = first_page + "&page=" + str(page)
+            link = self.first_page + "&page=" + str(page)
             self.driver.get(link)
 
             item_header = self.driver.find_elements_by_css_selector(".snippet-card__header")
