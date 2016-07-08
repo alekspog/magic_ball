@@ -5,12 +5,11 @@ class Page(object):
     def __init__(self, driver):
         self.driver = driver
 
-    def get_items_id(self, page_numbers=1):
+    def get_items_id(self, first_page, page_numbers=1):
         id_list = []
         for page in range(1, page_numbers + 1):
 
-            first_page_link = "https://market.yandex.ru/catalog/55070/list?hid=90796&how=dpop&in-stock=1"
-            link = first_page_link + "&page=" + str(page)
+            link = first_page + "&page=" + str(page)
             self.driver.get(link)
 
             item_header = self.driver.find_elements_by_css_selector(".snippet-card__header")
@@ -29,7 +28,7 @@ class Page(object):
 
     def get_items_cards(self, id_list):
         for id in id_list:
-            link = "https://market.yandex.ru/product/" + str(id) + "/spec?hid=90796&track=char"
+            link = "https://market.yandex.ru/product/" + str(id)
             self.driver.get(link)
 
             # criteria_list_el = np.array(driver.find_elements_by_css_selector("dt.product-spec__name > span"))
