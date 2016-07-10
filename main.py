@@ -5,7 +5,7 @@ driver = webdriver.PhantomJS()
 driver.implicitly_wait(10)
 
 first_page_link = "https://market.yandex.ru/catalog/54933/list?hid=90580&how=dpop&in-stock=1"
-page_numbers = 2
+page_numbers = 1
 
 cat = Catalogue(driver, first_page_link, page_numbers)
 
@@ -15,3 +15,4 @@ items_id = cat.get_items_id()
 cat.get_items_cards(items_id)
 
 driver.close()
+driver.quit()
