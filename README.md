@@ -3,7 +3,7 @@
 Запуск скрипта
 
 1. Склонировать репозиторий на локальную машину
-2. Скачать PhantomJS (http://phantomjs.org/download.html)и положить phantomjs.exe в папку репозитория
+2. Скачать PhantomJS (http://phantomjs.org/download.html) и положить phantomjs.exe в папку репозитория
 3. Скачать python2
 4. Создать виртуальное окружение
 "virtualenv <DIR>
