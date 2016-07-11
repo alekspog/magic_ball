@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-
 from selenium import webdriver
 from catalogue import Catalogue
 
 driver = webdriver.PhantomJS()
-driver.implicitly_wait(10)
+driver.implicitly_wait(3)
 
 first_page_link = "https://market.yandex.ru/catalog/54933/list?hid=90580&how=dpop&in-stock=1"
 page_numbers = 1
