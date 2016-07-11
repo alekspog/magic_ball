@@ -47,13 +47,15 @@ class Catalogue(object):
         return id_list
 
     def get_items_cards(self, id_list):
-        for id in id_list:
-            link = "https://market.yandex.ru/product/" + str(id)
-            self.driver.get(link)
+        with open('goods_criteria.csv', mode='wb') as csvfile:
+            writer = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
+            for id in id_list:
+                link = "https://market.yandex.ru/product/" + str(id)
+                self.driver.get(link)
 
-            criteria_list_el = self.driver.find_elements_by_id("product-spec-")
-            # criteria_list = []
-            for criteria in criteria_list_el:
-                criteria_name = criteria.find_element_by_css_selector(".product-spec__name-inner")
-                value = criteria.find_element_by_css_selector(".product-spec__value-inner")
-                print str(id) + "$$$" + criteria_name.text + "$$$" + value.text
+                criteria_list_el = self.driver.find_elements_by_id("product-spec-")
+                for criteria in criteria_list_el:
+                    criteria_name = criteria.find_element_by_css_selector(".product-spec__name-inner")
+                    value = criteria.find_element_by_css_selector(".product-spec__value-inner")
+                    print str(id) + "$$$" + criteria_name.text + "$$$" + value.text
+                    writer.writerow([str(id), criteria_name.text.encode('utf8').strip(), value.text.encode('utf8').strip()])
