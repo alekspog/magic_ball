@@ -53,11 +53,11 @@ class Catalogue(object):
                 link = "https://market.yandex.ru/product/" + str(good[0])
                 self.driver.get(link)
                 # add price to criteria
-                print(good[0] + "$$$" + "initial price" + "$$$" + good[2])
-                writer.writerow([str(good[0]), "initial price", str(good[2])])
+                print(good[0] + "$$$" + unicode("Цена", 'utf-8') + "$$$" + good[2])
+                writer.writerow([str(good[0]), "Цена", str(good[2])])
                 # add rating to criteria
-                print(good[0] + "$$$" + "rating" + "$$$" + good[3])
-                writer.writerow([str(good[0]), "rating", str(good[3])])
+                print(good[0] + "$$$" + unicode("Рейтинг", 'utf-8') + "$$$" + good[3])
+                writer.writerow([str(good[0]), "Рейтинг", str(good[3])])
 
                 criteria_list_el = self.driver.find_elements_by_id("product-spec-")
                 for criteria in criteria_list_el:
