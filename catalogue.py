@@ -3,7 +3,6 @@ import re
 from selenium.common.exceptions import NoSuchElementException
 import csv
 
-
 class Catalogue(object):
     def __init__(self, driver, first_page, page_numbers):
         self.driver = driver
@@ -50,7 +49,7 @@ class Catalogue(object):
         with open('goods_criteria.csv', mode='wb') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for good in goods_list:
-                link = "https://market.yandex.ru/product/" + str(good[0])
+                link = "https://market.yandex.ru/product/" + str(good[0]) + "/spec"
                 self.driver.get(link)
                 # add price to criteria
                 print(good[0] + "$$$" + unicode("Цена", 'utf-8') + "$$$" + good[2])
@@ -62,11 +61,12 @@ class Catalogue(object):
                 criteria_block = self.driver.find_elements_by_css_selector(".product-spec-wrap__body")
                 for block in criteria_block:
                     block_title = block.find_element_by_css_selector(".title").text
-                    criteria_list_el = block.find_elements_by_id("product-spec-")
+                    criteria_list_el = block.find_elements_by_css_selector(".product-spec")
                     for criteria_el in criteria_list_el:
                         criteria_text = criteria_el.find_element_by_css_selector(".product-spec__name-inner").text
                         criteria = block_title + " - " + criteria_text
                         value = criteria_el.find_element_by_css_selector(".product-spec__value-inner").text
                         print(good[0] + "$$$" + criteria + "$$$" + value)
                         writer.writerow([str(good[0]), criteria.encode('utf8').strip(), value.encode('utf8').strip()])
+
 
