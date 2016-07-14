@@ -34,7 +34,6 @@ class Catalogue(object):
                         # get goods rating
                         try:
                             good_rating = good.find_element_by_css_selector('.rating').text
-                            print(good_rating)
                         except NoSuchElementException:
                             good_rating = "0"
                     except NoSuchElementException:
@@ -53,6 +52,12 @@ class Catalogue(object):
             for good in goods_list:
                 link = "https://market.yandex.ru/product/" + str(good[0])
                 self.driver.get(link)
+                # add price to criteria
+                print(good[0] + "$$$" + "initial price" + "$$$" + good[2])
+                writer.writerow([str(good[0]), "initial price", str(good[2])])
+                # add rating to criteria
+                print(good[0] + "$$$" + "rating" + "$$$" + good[3])
+                writer.writerow([str(good[0]), "rating", str(good[3])])
 
                 criteria_list_el = self.driver.find_elements_by_id("product-spec-")
                 for criteria in criteria_list_el:
@@ -60,3 +65,4 @@ class Catalogue(object):
                     value = criteria.find_element_by_css_selector(".product-spec__value-inner")
                     print(good[0] + "$$$" + criteria_name.text + "$$$" + value.text)
                     writer.writerow([str(good[0]), criteria_name.text.encode('utf8').strip(), value.text.encode('utf8').strip()])
+
