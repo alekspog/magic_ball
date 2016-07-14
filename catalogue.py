@@ -40,7 +40,7 @@ class Catalogue(object):
                         result = False
 
                     if result:
-                        print good_id + ";" + good_name + ";" + good_init_price + ";" + good_rating
+                        print (good_id + ";" + good_name + ";" + good_init_price + ";" + good_rating).encode('utf-8')
                         good_line = [good_id, good_name.encode('utf8').strip(), good_init_price, good_rating]
                         writer.writerow(good_line)
                         goods_list.append(good_line)
