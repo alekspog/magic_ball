@@ -13,6 +13,7 @@ class Catalogue(object):
         with open('goods_id.csv', mode='wb') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             goods_list = []
+            goods_id_list = []
             for page in range(1, self.page_numbers + 1):
 
                 link = self.first_page + "&page=" + str(page)
@@ -25,24 +26,26 @@ class Catalogue(object):
                     # get goods id from link
                     result = re.search("https://market.yandex.ru/product/(\d*)", good_href.get_attribute('href'))
                     good_id = result.groups()[0]
-                    # get min price of good
-                    try:
-                        good_init_price_str = good.find_element_by_css_selector('.price').text
-                        result = re.findall("(\d+)", good_init_price_str)
-                        good_init_price = "".join(result)
-                        # get goods rating
+                    if good_id not in goods_id_list:
+                        goods_id_list.append(good_id)
+                        # get min price of good
                         try:
-                            good_rating = good.find_element_by_css_selector('.rating').text
+                            good_init_price_str = good.find_element_by_css_selector('.price').text
+                            result = re.findall("(\d+)", good_init_price_str)
+                            good_init_price = "".join(result)
+                            # get goods rating
+                            try:
+                                good_rating = good.find_element_by_css_selector('.rating').text
+                            except NoSuchElementException:
+                                good_rating = "0"
                         except NoSuchElementException:
-                            good_rating = "0"
-                    except NoSuchElementException:
-                        result = False
+                            result = False
 
-                    if result:
-                        print (good_id + ";" + good_name + ";" + good_init_price + ";" + good_rating).encode('utf-8')
-                        good_line = [good_id, good_name.encode('utf8').strip(), good_init_price, good_rating]
-                        writer.writerow(good_line)
-                        goods_list.append(good_line)
+                        if result:
+                            print (good_id + ";" + good_name + ";" + good_init_price + ";" + good_rating).encode('utf-8')
+                            good_line = [good_id, good_name.encode('utf8').strip(), good_init_price, good_rating]
+                            writer.writerow(good_line)
+                            goods_list.append(good_line)
         return goods_list
 
     def get_goods_criteria(self, goods_list):
