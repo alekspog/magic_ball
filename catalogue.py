@@ -34,7 +34,7 @@ class Catalogue(object):
                         result = re.findall("(\d+)", item_init_price_str)
                         item_init_price = "".join(result)
                     except NoSuchElementException:
-                        item_init_price = "0"
+                        result = False
                     # get goods rating
                     try:
                         item_rating = item.find_element_by_css_selector('.rating').text
