@@ -26,13 +26,13 @@ class Catalogue(object):
                     # get goods id from link
                     result = re.search("https://market.yandex.ru/product/(\d*)", item_href.get_attribute('href'))
                     item_id = result.groups()[0]
-                    # make goods id list
-                    id_list.append(item_id)
                     # get min price of good
                     try:
                         item_init_price_str = item.find_element_by_css_selector('.price').text
                         result = re.findall("(\d+)", item_init_price_str)
                         item_init_price = "".join(result)
+                        # make goods id list
+                        id_list.append(item_id)
                     except NoSuchElementException:
                         result = False
                     # get goods rating
