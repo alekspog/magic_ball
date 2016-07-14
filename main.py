@@ -11,10 +11,10 @@ page_numbers = 1
 
 cat = Catalogue(driver, first_page_link, page_numbers)
 
-# get list of items and its ids
-items_id = cat.get_goods_id()
-# get item data with criteria text and its values
-cat.get_goods_criteria(items_id)
+# get list of goods and its ids
+goods_id = cat.get_goods_id()
+# get good data with criteria text and its values
+cat.get_goods_criteria(goods_id)
 
 driver.close()
 driver.quit()
