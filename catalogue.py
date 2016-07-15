@@ -3,17 +3,21 @@ import re
 from selenium.common.exceptions import NoSuchElementException
 import csv
 from datetime import datetime
+import os
 
 class Catalogue(object):
     def __init__(self, driver, first_page, page_numbers):
-        self.driver = driver
-        self.first_page = first_page
-        self.page_numbers = page_numbers
-        self.now = datetime.utcnow().strftime('%Y-%m-%d-%H-%M-%S')
+		self.driver = driver
+		self.first_page = first_page
+		self.page_numbers = page_numbers
+		now = datetime.utcnow().strftime('%Y-%m-%d-%H-%M-%S')
+		cwd = os.getcwd()
+		path = os.path.join(cwd,'csv')
+		self.file_id = os.path.join(path, str(now) + '_goods_id.csv')
+		self.file_criteria = os.path.join(path, str(now) + '_goods_criteria.csv')
 
     def get_goods_id(self):
-        file_name = str(self.now) + '_goods_id.csv'
-        with open(file_name, mode='wb') as csvfile:
+        with open(self.file_id, mode='wb') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             goods_list = []
             goods_id_list = []
@@ -52,8 +56,7 @@ class Catalogue(object):
         return goods_list
 
     def get_goods_criteria(self, goods_list):
-        file_name = str(self.now) + '_goods_criteria.csv'
-        with open(file_name, mode='wb') as csvfile:
+        with open(self.file_criteria, mode='wb') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for good in goods_list:
                 link = "https://market.yandex.ru/product/" + str(good[0]) + "/spec"
