@@ -2,15 +2,18 @@
 import re
 from selenium.common.exceptions import NoSuchElementException
 import csv
+from datetime import datetime
 
 class Catalogue(object):
     def __init__(self, driver, first_page, page_numbers):
         self.driver = driver
         self.first_page = first_page
         self.page_numbers = page_numbers
+        self.now = datetime.utcnow().strftime('%Y-%m-%d-%H-%M-%S')
 
     def get_goods_id(self):
-        with open('goods_id.csv', mode='wb') as csvfile:
+        file_name = str(self.now) + '_goods_id.csv'
+        with open(file_name, mode='wb') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             goods_list = []
             goods_id_list = []
@@ -49,7 +52,8 @@ class Catalogue(object):
         return goods_list
 
     def get_goods_criteria(self, goods_list):
-        with open('goods_criteria.csv', mode='wb') as csvfile:
+        file_name = str(self.now) + '_goods_criteria.csv'
+        with open(file_name, mode='wb') as csvfile:
             writer = csv.writer(csvfile, delimiter=';', quotechar='|', quoting=csv.QUOTE_MINIMAL)
             for good in goods_list:
                 link = "https://market.yandex.ru/product/" + str(good[0]) + "/spec"
